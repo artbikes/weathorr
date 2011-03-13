@@ -8,6 +8,8 @@ get('/reverse'){ params[:word].reverse }
 __END__
 @@layout
 !!! 5
+%script(src="http://rightjs.org/hotlink/right.js")
+%script(src="/custom.js")
 %html
   %head
     %meta(charset="utf-8")
@@ -24,3 +26,4 @@ __END__
   %li <a id="server" href="/response">Call server-side Function</a>
   %li <a id="time" href="/time">Get the time</a>
   %li <a id="amazing" href="#">Toggle Title</a>
+#msg
