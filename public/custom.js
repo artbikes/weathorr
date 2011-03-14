@@ -16,3 +16,8 @@
     }
   });
 });
+
+"#amazing".onClick(function(event) {
+  event.stop();
+  $$('h2')[0].fade();
+});

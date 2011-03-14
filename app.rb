@@ -19,6 +19,7 @@ __END__
     = yield
 
 @@index
+%h2 The Amazing Toggling Title
 %form#reverse(action="/reverse" method="POST")
   %input#word(type="text" name="word")
   %input(type="submit" value="Reverse")
