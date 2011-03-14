@@ -1,6 +1,10 @@
-%w[rubygems sinatra haml heroku].each{ |gem| require gem }
+%w[rubygems sinatra haml sass heroku].each{ |gem| require gem }
 
 get('/'){ haml :index }
+get '/stylesheet.css' do
+  headers 'Content-Type' => 'text/css; charset=utf-8'
+  sass :stylesheet
+end
 get('/response'){ "Hello from the server" }
 get('/time'){ "The time is " + Time.now.to_s }
 post('/reverse'){ params[:word].reverse }
@@ -12,6 +16,7 @@ __END__
 %script(src="/custom.js")
 %html
   %head
+    %link{:rel => "stylesheet", :href => "/style.css", :type => "text/css", :media => "all"}
     %meta(charset="utf-8")
     %title Sinatra Ajax
   %body
