@@ -1,9 +1,9 @@
 %w[rubygems sinatra haml sass heroku].each{ |gem| require gem }
 
 get('/'){ haml :index }
-get '/stylesheet.css' do
-  headers 'Content-Type' => 'text/css; charset=utf-8'
-  sass :stylesheet
+get '/style.css' do
+  content_type "text/css", :charset => "utf-8"
+  sass :style
 end
 get('/response'){ "Hello from the server" }
 get('/time'){ "The time is " + Time.now.to_s }
@@ -33,5 +33,5 @@ __END__
   %li <a id="server" href="/response">Call server-side Function</a>
   %li <a id="time" href="/time">Get the time</a>
   %li <a id="amazing" href="#">Toggle Title</a>
-#msg
 %img(src="http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif")
+#msg
