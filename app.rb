@@ -20,6 +20,7 @@ __END__
 
 @@index
 %h2 The Amazing Toggling Title
+%h2 and his Sidekick
 %form#reverse(action="/reverse" method="POST")
   %input#word(type="text" name="word")
   %input(type="submit" value="Reverse")
