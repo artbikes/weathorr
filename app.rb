@@ -29,4 +29,4 @@ __END__
   %li <a id="time" href="/time">Get the time</a>
   %li <a id="amazing" href="#">Toggle Title</a>
 #msg
-= image_tag("http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif")
+%img(src="http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif")
