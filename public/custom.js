@@ -7,3 +7,12 @@
   event.stop();
   $('msg').load("/response");
 });
+
+"#reverse".onSubmit(function(event) {
+  event.stop();
+  this.send({
+    onSuccess: function() {
+      $('msg').update(this.responseText);
+    }
+  });
+});
