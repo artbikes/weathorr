@@ -1,0 +1,11 @@
+%h2 The Amazing Toggling Title
+%h2 and his Sidekick
+%form#reverse(action="/reverse" method="POST")
+  %input#word(type="text" name="word")
+  %input(type="submit" value="Reverse")
+%ul
+  %li <a id="server" href="/response">Call server-side Function</a>
+  %li <a id="time" href="/time">Get the time</a>
+  %li <a id="amazing" href="#">Toggle Title</a>
+%img(src="http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif")
+#msg
