@@ -1,7 +1,53 @@
 .header
-  %span San Francisco - <a href="">Chicago</a> - <a href="">Boston</a> - <a href="">New Orleans</a> - <a href="">State College</a>
-  %span.updates
+
+  %span{:style => "float: left;"} San Francisco - <a href="">Chicago</a> - <a href="">Boston</a> - <a href="">New Orleans</a> - <a href="">State College</a>
+    
+  %span.updates{:style => "display: inline;"}
     %span.day Page loaded at
     %span.number= Time.now
     or
     %span.number= Time.now.utc
+  %span{:style =>"clear: both; display: block; height: 0px;"}
+.current
+  - temp=45.1
+  - temp2=7.28
+  - wc1=44
+  - wc2=7
+  %span.day Temp: 
+  %span.number #{temp}F
+  (#{temp2})C,
+  %span.day Windchill: 
+  %span.number #{wc1}F
+  (#{wc2})
+  %br
+  %span.day Clouds: 
+  %span.number A Few Clouds and Windy, 
+  %span.day Wind 
+  from 
+  %span.number West 
+  at 
+  %span.number 32 mph with gusts 38.0
+  %br
+  %span.day Updated at 
+  %span.number Thu, 28 Apr 2011 20:56 
+  (KSFO)
+.images
+  .oneimage
+    .header radar (precipitation)
+    %img(src="http://radar.weather.gov/Conus/Loop/pacsouthwest_loop.gif" alt="radar loop" width="300" height="285")
+    %span.imageoptions
+      %span.currentop.ooption mosaic
+      %span.ooption
+        %a(class="options" href="?radar_pic=single")single
+      \ - 
+      %span.ooption
+        %a(class="options" href="?radar_size=big")big
+        %span.currentop.ooption small
+    %div
+      :css
+        clear: both
+      
+.insert
+.static
+.static
+.footer
