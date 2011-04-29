@@ -1,7 +1,7 @@
-#header 
-  .locations San Francisco - <a href="">Chicago</a> - <a href="">Boston</a> - <a href="">New Orleans</a> - <a href="">State College</a>
-  .updates 
-    Page loaded at 
-    = Time.now
+.header
+  %span San Francisco - <a href="">Chicago</a> - <a href="">Boston</a> - <a href="">New Orleans</a> - <a href="">State College</a>
+  %span.updates
+    %span.day Page loaded at
+    %span.number= Time.now
     or
-    = Time.now.utc
+    %span.number= Time.now.utc
