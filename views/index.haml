@@ -9,24 +9,20 @@
     %span.number= Time.now.utc
   %span{:style =>"clear: both; display: block; height: 0px;"}
 .current
-  - temp=45.1
-  - temp2=7.28
-  - wc1=44
-  - wc2=7
   %span.day Temp: 
-  %span.number #{temp}F
-  (#{temp2})C,
+  %span.number= @temp1
+  = "(#{@temp2}C)"
   %span.day Windchill: 
-  %span.number #{wc1}F
-  (#{wc2})
+  %span.number= @chill1
+  = "(#{@chill2}C)"
   %br
   %span.day Clouds: 
-  %span.number A Few Clouds and Windy, 
+  %span.number= "#{@clouds}," 
   %span.day Wind 
   from 
-  %span.number West 
+  %span.number= @wind 
   at 
-  %span.number 32 mph with gusts 38.0
+  %span.number= "#{@windspeed} mph"
   %br
   %span.day Updated at 
   %span.number Thu, 28 Apr 2011 20:56 
