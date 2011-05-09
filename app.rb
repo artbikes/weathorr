@@ -3,7 +3,6 @@ require 'sinatra'
 require 'haml'
 require 'sass' 
 require 'heroku' 
-require 'hpricot' 
 require 'open-uri'
 require 'nokogiri'
 
