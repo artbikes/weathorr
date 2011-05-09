@@ -11,6 +11,7 @@ GEM
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
     mime-types (1.16)
+    nokogiri (1.4.4)
     rack (1.2.2)
     rake (0.8.7)
     rest-client (1.6.1)
@@ -28,5 +29,6 @@ DEPENDENCIES
   haml
   heroku
   hpricot
+  nokogiri
   sass
   sinatra
