@@ -1,10 +1,17 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/cache'
 require 'haml'
 require 'sass' 
 require 'heroku' 
 require 'open-uri'
 require 'nokogiri'
+
+set :root, '/home/art/Projects/weathorr'
+set :public, '/home/art/Projects/weathorr/public'
+set :cache_output_dir, '/home/art/Projects/weathorr/system/cache'
+
+set :cache_enabled, true
 
 get '/' do
   doc = open("public/data/KBOS.xml") do |f|

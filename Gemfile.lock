@@ -19,6 +19,11 @@ GEM
     sinatra (1.2.0)
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
+    sinatra-cache (0.3.7)
+      sinatra (>= 1.1.0)
+      sinatra-outputbuffer (>= 0.1.0)
+    sinatra-outputbuffer (0.1.0)
+      sinatra (>= 1.0.a)
     tilt (1.2.2)
 
 PLATFORMS
@@ -30,3 +35,4 @@ DEPENDENCIES
   nokogiri
   sass
   sinatra
+  sinatra-cache
