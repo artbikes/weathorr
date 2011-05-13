@@ -1,2 +1,4 @@
 system/cache/*
 .sass-cache
+public/data/*.forecast
+public/data/*.xml

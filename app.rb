@@ -17,7 +17,7 @@ class Conditions
   attr_accessor :tempf, :tempc, :chillf, :chillc, :clouds, :wind, :windspeed
 
   def initialize
-    doc = open("public/data/KBOS.xml") do |f|
+    doc = open("public/data/KSFO.xml") do |f|
       Nokogiri::XML(f)
     end
     @tempf = (doc/"temp_f").inner_text
@@ -37,7 +37,7 @@ class Forecast
     f = File.open("public/data/sfo.forecast")
     doc = Nokogiri::HTML(f)
     index = 0
-    @summary = ""
+    @summary = "NWS San Francisco Peninsula Forecast -- "
     doc.at_css("body").traverse do |node|
        if node.text?
          index += 1
