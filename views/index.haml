@@ -10,19 +10,19 @@
   %span{:style =>"clear: both; display: block; height: 0px;"}
 .current
   %span.day Temp: 
-  %span.number= @temp1
-  = "(#{@temp2}C)"
+  %span.number= @cond.tempf
+  = "(#{@cond.tempc}C)"
   %span.day Windchill: 
-  %span.number= @chill1
-  = "(#{@chill2}C)"
+  %span.number= @cond.chillf
+  = "(#{@cond.chillc}C)"
   %br
   %span.day Clouds: 
-  %span.number= "#{@clouds}," 
+  %span.number= "#{@cond.clouds}," 
   %span.day Wind 
   from 
-  %span.number= @wind 
+  %span.number= @cond.wind 
   at 
-  %span.number= "#{@windspeed} mph"
+  %span.number= "#{@cond.windspeed} mph"
   %br
   %span.day Updated at 
   %span.number Thu, 28 Apr 2011 20:56 
@@ -42,7 +42,7 @@
   %div{:style =>"clear: both"}   
 .insert
   .header forecast
-  = "#{@forecast}"
+  = "#{@forecast.summary}"
 .static   
   .header astronomical weather predictions
   %a(href="http://cleardarksky.com/c/SanFranCAkey.html")
