@@ -16,10 +16,19 @@ set :show_exceptions
 class Conditions
   attr_accessor :tempf, :tempc, :chillf, :chillc, :clouds, :wind, :windspeed
 
-  def initialize
-    doc = open("public/data/KSFO.xml") do |f|
-      Nokogiri::XML(f)
+  def initialize(city)
+    cities = { "sfo" => ["KSFO.xml","sfo.forecast"],
+               "chicago" => ["KMDW.xml","mdw.forecast"]    
+      }
+    begin
+      f = File.open("public/data/#{cities[city][1]}")
+    rescue EOFError
+    rescue IOError => e
+      puts e.exception
+    rescue Errno::ENOENT
+      puts "no such file #{f}"
     end
+    doc =  Nokogiri::XML(f)
     @tempf = (doc/"temp_f").inner_text
     @tempc = (doc/"temp_c").inner_text
     @chillf = (doc/"windchill_f").inner_text
@@ -33,33 +42,66 @@ end
 class Forecast
   attr_accessor :summary
 
-  def initialize
-    f = File.open("public/data/sfo.forecast")
+  def initialize(city)
+    cities = { "sfo" => ["KFSO.xml","sfo.forecast"],
+               "chicago" => ["KMDW.xml","mdw.forecast"]	  
+	    }
+    f = File.open("public/data/#{cities[city][1]}")
     doc = Nokogiri::HTML(f)
-    index = 0
-    @summary = "NWS San Francisco Peninsula Forecast -- "
-    doc.at_css("body").traverse do |node|
-       if node.text?
-         index += 1
-         next if ( index < 4 )
-         break if node.content == " &&"
-    		 if node.content =~ /^ \./
-           node.content = node.content.sub(/ .(.*)\.\.\./, '<span class="day">\1...</span>')
-           node.content = node.content.sub(/^/, "\n<br>")
-         end	
-         @summary << node.content.downcase!
-       end
+    @summary = ""
+    if city == "sfo"
+      index = 0
+      @summary = "NWS San Francisco Peninsula Forecast -- "
+      doc.at_css("body").traverse do |node|
+        if node.text?
+          index += 1
+          next if ( index < 4 )
+          break if node.content == " &&"
+          if node.content =~ /^ \./
+            node.content = node.content.sub(/ .(.*)\.\.\./, '<span class="day">\1...</span>')
+            node.content = node.content.sub(/^/, "\n<br>")
+          end
+          @summary << node.content.downcase!
+        end
+      end
+    elsif city == "chicago"
+      @summary << doc.css("pre").text.downcase
+      @summary.gsub!(/^\.([^.]*)\.\.\.(.*)/,'<span class="day">\1...</span>\2')
+      @summary.gsub!(/^(TODAY|TONIGHT)\.\.\.(.*)/,'<span class="day">\1...</span>\2')
     end
   end
 end
 
 get '/' do
-  @cond = Conditions.new
-  @forecast = Forecast.new
+  city = "sfo"
+  @cond = Conditions.new(city)
+  @forecast = Forecast.new(city)
   haml :index
+end
+
+get '/city/:city' do
+  #city = "chicago"
+  cities = { "sfo" => ["KSFO.xml","sfo.forecast"],
+         "chicago" => ["KMDW.xml","mdw.forecast"]}
+  halt 404 unless cities[params[:city]]
+  @cond = Conditions.new(params[:city])
+  @forecast = Forecast.new(params[:city])
+  haml :index
+end
+
+get '/city/?' do
+  redirect '/'
 end
 
 get '/style.css' do
   content_type "text/css", :charset => "utf-8"
   sass :style
+end
+
+not_found do
+  haml :wtf
+end
+
+error do
+  haml :wtf
 end

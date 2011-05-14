@@ -1,0 +1,19 @@
+!!! 5
+%html
+  %head
+    %meta(charset='utf-8')
+    %meta(name='viewport' content='width=680, maximum-scale=1.0')
+    %title WEATHORR :: WTF?!
+    %link(rel='stylesheet' href='/site.css' type='text/css' media='screen' title='default style sheet')
+  %body
+    #content
+      %header
+        %h1 WTF?!
+      #index
+        %p Yeah, so something went wrong. Who knows what? Let's not play the blame game.
+        %form(action='/group' method='post')
+          %p
+            %label(for='searchbox') View another group?
+            %input#searchbox(type='url' name='url' value='http://flickr.com/groups/onthestreet')
+            %input#ok(type='submit' value='OK')
+      %footer
