@@ -14,14 +14,32 @@ set :cache_enabled, true
 set :show_exceptions
 
 class Conditions
-  attr_accessor :tempf, :tempc, :chillf, :chillc, :clouds, :wind, :windspeed
+  attr_accessor :tempf, :tempc, :chillf, :chillc, :clouds, :wind, :windspeed, :mosaic, :single
 
   def initialize(city)
-    cities = { "sfo" => ["KSFO.xml","sfo.forecast"],
-               "chicago" => ["KMDW.xml","mdw.forecast"]    
+    cities = { "sfo"    =>  {:conditions => "KSFO.xml",
+                             :mosaic => {:src    => "http://radar.weather.gov/Conus/Loop/pacsouthwest_loop.gif",
+				         :alt    => "radar loop",
+				         :width  => "300",
+				         :height => "285"},
+                              :single => {:src    => "http://www.srh.noaa.gov/ridge/lite/N0R/MUX_loop.gif",
+				         :alt    => "radar loop", 
+				         :width  => "300",
+				         :height => "275"},
+                              :pretty =>"San Francisco"},
+               "chicago" => {:conditions => "KMDW.xml",
+                             :mosaic => {:src    => "http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif",
+				         :alt    => "radar loop",
+				         :width  => "300",
+				         :height => "285"},
+                             :single => {:src    => "http://www.srh.noaa.gov/ridge/lite/N0R/LOT_loop.gif",
+				         :alt    => "radar loop", 
+				         :width  => "300",
+				         :height => "275"},
+                              :pretty => "Chicago"}    
       }
     begin
-      f = File.open("public/data/#{cities[city][1]}")
+      f = File.open("public/data/#{cities[city][:conditions]}")
     rescue EOFError
     rescue IOError => e
       puts e.exception
@@ -36,6 +54,8 @@ class Conditions
     @clouds = (doc/"weather").inner_text
     @wind = (doc/"wind_dir").inner_text
     @windspeed = (doc/"wind_mph").inner_text
+    @mosaic = cities[city][:mosaic]
+    @single = cities[city][:single]
   end
 end
 
@@ -43,10 +63,10 @@ class Forecast
   attr_accessor :summary
 
   def initialize(city)
-    cities = { "sfo" => ["KFSO.xml","sfo.forecast"],
-               "chicago" => ["KMDW.xml","mdw.forecast"]	  
+    cities = { "sfo" => "sfo.forecast",
+               "chicago" => "mdw.forecast"  
 	    }
-    f = File.open("public/data/#{cities[city][1]}")
+    f = File.open("public/data/#{cities[city]}")
     doc = Nokogiri::HTML(f)
     @summary = ""
     if city == "sfo"
@@ -61,7 +81,7 @@ class Forecast
             node.content = node.content.sub(/ .(.*)\.\.\./, '<span class="day">\1...</span>')
             node.content = node.content.sub(/^/, "\n<br>")
           end
-          @summary << node.content.downcase!
+          @summary << node.content.downcase
         end
       end
     elsif city == "chicago"
@@ -80,9 +100,7 @@ get '/' do
 end
 
 get '/city/:city' do
-  #city = "chicago"
-  cities = { "sfo" => ["KSFO.xml","sfo.forecast"],
-         "chicago" => ["KMDW.xml","mdw.forecast"]}
+  cities={"sfo" => 1,"chicago" => 1}
   halt 404 unless cities[params[:city]]
   @cond = Conditions.new(params[:city])
   @forecast = Forecast.new(params[:city])

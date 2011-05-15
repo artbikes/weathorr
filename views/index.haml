@@ -30,7 +30,8 @@
 .images
   .oneimage
     .header radar (precipitation)
-    %img(src="http://radar.weather.gov/Conus/Loop/pacsouthwest_loop.gif" alt="radar loop" width="300" height="285")
+    %img{@cond.mosaic}
+    %img{@cond.single}
     %span.imageoptions
       %span.currentop.ooption mosaic
       %span.ooption
