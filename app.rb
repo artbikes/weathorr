@@ -14,7 +14,7 @@ set :cache_enabled, true
 set :show_exceptions
 
 class Conditions
-  attr_accessor :tempf, :tempc, :chillf, :chillc, :clouds, :wind, :windspeed, :mosaic, :single
+  attr_accessor :tempf, :tempc, :chillf, :chillc, :clouds, :wind, :windspeed, :mosaic, :single, :header
 
   def initialize(city)
     cities = { "sfo"    =>  {:conditions => "KSFO.xml",
@@ -26,7 +26,7 @@ class Conditions
 				         :alt    => "radar loop", 
 				         :width  => "300",
 				         :height => "275"},
-                              :pretty =>"San Francisco"},
+                              :pretty => "San Francisco"},
                "chicago" => {:conditions => "KMDW.xml",
                              :mosaic => {:src    => "http://radar.weather.gov/Conus/Loop/centgrtlakes_loop.gif",
 				         :alt    => "radar loop",
@@ -56,6 +56,11 @@ class Conditions
     @windspeed = (doc/"wind_mph").inner_text
     @mosaic = cities[city][:mosaic]
     @single = cities[city][:single]
+    pretty = cities[city][:pretty]
+    @header = "#{pretty} - "
+    cities.keys.each do |x|
+      @header += "<a href=/city/#{x}>#{cities[x][:pretty]}<a/>" unless x == city
+    end
   end
 end
 
