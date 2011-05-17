@@ -59,7 +59,7 @@ class Conditions
     pretty = cities[city][:pretty]
     @header = "#{pretty} - "
     cities.keys.each do |x|
-      @header += "<a href=/city/#{x}>#{cities[x][:pretty]}<a/>" unless x == city
+      @header += "<a href=/city/#{x}>#{cities[x][:pretty]}</a>" unless x == city
     end
   end
 end
