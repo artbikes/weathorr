@@ -29,8 +29,17 @@
 .images
   .oneimage
     .header radar (precipitation)
-    %img{@cond.mosaic}
-    %img{@cond.single}
+    %img{@cond.mosaic, :id => 'map'}
+    :javascript
+      $(function() {
+        $('#toggle').click(function() {
+          if ($('#map').attr('src') == '#{@cond.single[:src]}') {
+            $('#map').attr('src', '#{@cond.mosaic[:src]}');
+          } else {
+            $('#map').attr('src', '#{@cond.single[:src]}');
+          }
+        });
+      });
     %span.imageoptions
       %span.currentop.ooption mosaic
       %span.ooption
@@ -39,6 +48,7 @@
       %span.ooption
         %a(class="options" href="?radar_size=big")big
         %span.currentop.ooption small
+      %input{:type => "button", :value => "click", :id => "toggle"}
   %div{:style =>"clear: both"}   
 .insert
   .header forecast

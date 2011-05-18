@@ -99,9 +99,7 @@ end
 
 get '/' do
   city = "sfo"
-  @cond = Conditions.new(city)
-  @forecast = Forecast.new(city)
-  haml :index
+  redirect "/city/#{city}"
 end
 
 get '/city/:city' do
