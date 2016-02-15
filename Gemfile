@@ -1,7 +1,9 @@
 source :rubygems
 gem "sinatra"
+gem "bundle"
 gem "sinatra-cache"
 gem "heroku"
+gem "thin"
 gem "haml"
 gem "sass"
 gem "nokogiri"

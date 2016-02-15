@@ -7,9 +7,9 @@ require 'heroku'
 require 'open-uri'
 require 'nokogiri'
 
-set :root, '/home/art/Projects/weathorr'
-set :public, '/home/art/Projects/weathorr/public'
-set :cache_output_dir, '/home/art/Projects/weathorr/system/cache'
+set :root, '/var/www/weathorr'
+set :public, '/var/www/weathorr/public'
+set :cache_output_dir, '/var/www/weathorr/system/cache'
 set :cache_enabled, true
 set :show_exceptions
 
@@ -39,7 +39,7 @@ class Conditions
                               :pretty => "Chicago"}    
       }
     begin
-      f = File.open("public/data/#{cities[city][:conditions]}")
+      f = File.open("/var/www/weathorr/public/data/#{cities[city][:conditions]}")
     rescue EOFError
     rescue IOError => e
       puts e.exception
@@ -71,10 +71,10 @@ class Forecast
     cities = { "sfo" => "sfo.forecast",
                "chicago" => "mdw.forecast"  
 	    }
-    f = File.open("public/data/#{cities[city]}")
-    doc = Nokogiri::HTML(f)
+    f = File.open("/var/www/weathorr/public/data/#{cities[city]}")
     @summary = ""
     if city == "sfo"
+      doc = Nokogiri::HTML(f)
       index = 0
       @summary = "NWS San Francisco Peninsula Forecast -- "
       doc.at_css("body").traverse do |node|
@@ -90,9 +90,9 @@ class Forecast
         end
       end
     elsif city == "chicago"
-      @summary << doc.css("pre").text.downcase
-      @summary.gsub!(/^\.([^.]*)\.\.\.(.*)/,'<span class="day">\1...</span>\2')
-      @summary.gsub!(/^(TODAY|TONIGHT)\.\.\.(.*)/,'<span class="day">\1...</span>\2')
+        @summary = " NWS Chicago Forecast --"
+	contents = f.read
+	@summary << contents
     end
   end
 end

@@ -1,11 +1,15 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    bundle (0.0.1)
+      bundler
     configuration (1.2.0)
+    daemons (1.2.2)
+    eventmachine (1.0.7)
     haml (3.0.25)
     heroku (1.18.3)
       launchy (~> 0.3.2)
-      rest-client (< 1.7.0, >= 1.4.0)
+      rest-client (>= 1.4.0, < 1.7.0)
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
@@ -18,21 +22,27 @@ GEM
     sass (3.1.0.alpha.221)
     sinatra (1.2.0)
       rack (~> 1.1)
-      tilt (< 2.0, >= 1.2.2)
+      tilt (>= 1.2.2, < 2.0)
     sinatra-cache (0.3.7)
       sinatra (>= 1.1.0)
       sinatra-outputbuffer (>= 0.1.0)
     sinatra-outputbuffer (0.1.0)
       sinatra (>= 1.0.a)
+    thin (1.6.3)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0)
+      rack (~> 1.0)
     tilt (1.2.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundle
   haml
   heroku
   nokogiri
   sass
   sinatra
   sinatra-cache
+  thin
